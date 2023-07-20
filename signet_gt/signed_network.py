@@ -34,9 +34,17 @@ class SignedNetwork:
             weights = A[A.nonzero()]  # Get the non-zero elements as edge weights
 
         elif repre_type == 'edgelist':
+
+            # UNDIRECTED
+            if not is_directed:
+                A = np.triu(repre)  # Convert the input adjacency matrix to upper triangular to avoid duplicate edges
+
+            # DIRECTED    
+            else:
+                A = np.array(repre)
             edge_list = repre
 
-            if not weights:
+            if weights is None:
                 raise ValueError('Please provide edge weights')  # Raise an exception for missing edge weights
 
         else:
